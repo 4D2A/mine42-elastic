@@ -1,0 +1,164 @@
+version: "2"
+
+services:
+  logstash-1:
+    hostname: "logstash-1"
+    # image: "docker.elastic.co/logstash/logstash:6.7.0"
+    build: ./logstash
+    environment:
+      - "NODE_NAME=1.logstash"
+      - "CONFIG_RELOAD_AUTOMATIC=true"
+      - "CONFIG_RELOAD_INTERVAL=5s"
+      - "QUEUE_TYPE=persisted"
+      - "QUEUE_MAX_BYTES=4gb"
+    volumes:
+      - "/data/mine42_elk/logstash/pipelines:/usr/share/logstash/pipeline"
+    networks:
+      - backend
+
+  master-1:
+    hostname: "master-1"
+    image: "docker.elastic.co/elasticsearch/elasticsearch:6.7.0"
+    environment:
+      # System and Java configuration
+      - "bootstrap.memory_lock=true"
+      - "ES_JAVA_OPTS=-Xms1000m -Xmx1000m"
+      # General configuration
+      - "node.name=master-1"
+      - "cluster.name=mine42"
+      # Node type configuration
+      - "node.master=true"
+      - "node.data=false"
+      - "node.ingest=false"
+      # Monitoring
+      - "xpack.monitoring.enabled=true"
+      - "xpack.monitoring.collection.enabled=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - "master-1:/usr/share/elasticsearch/data"
+    networks:
+      - backend 
+
+  ingest:
+    hostname: "ingest"
+    image: "docker.elastic.co/elasticsearch/elasticsearch:6.7.0"
+    environment:
+      # System and Java configuration
+      - "bootstrap.memory_lock=true"
+      - "ES_JAVA_OPTS=-Xms500m -Xmx500m"
+      # General configuration
+      - "node.name=ingest-1"
+      - "cluster.name=mine42"
+      - "discovery.zen.ping.unicast.hosts=master-1"
+      # Node type configuration
+      - "node.master=false"
+      - "node.data=false"
+      - "node.ingest=true"
+      # Monitoring
+      - "xpack.monitoring.enabled=true"
+      - "xpack.monitoring.collection.enabled=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - "ingest-1:/usr/share/elasticsearch/data"
+    networks:
+      - backend
+    ports:
+      - "127.0.0.1:9200:9200/tcp"
+
+  data-1:
+    hostname: "data-1"
+    image: "docker.elastic.co/elasticsearch/elasticsearch:6.7.0"
+    environment:
+      # System and Java configuration
+      - "bootstrap.memory_lock=true"
+      - "ES_JAVA_OPTS=-Xms3000m -Xmx3000m"
+      # General configuration
+      - "node.name=data-1"
+      - "cluster.name=mine42"
+      - "discovery.zen.ping.unicast.hosts=master-1"
+      # Node type configuration
+      - "node.master=false"
+      - "node.data=true"
+      - "node.ingest=false"
+      # Monitoring
+      - "xpack.monitoring.enabled=true"
+      - "xpack.monitoring.collection.enabled=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - "data-1:/usr/share/elasticsearch/data"
+    networks:
+      - backend
+
+  data-2:
+    hostname: "data-1"
+    image: "docker.elastic.co/elasticsearch/elasticsearch:6.7.0"
+    environment:
+      # System and Java configuration
+      - "bootstrap.memory_lock=true"
+      - "ES_JAVA_OPTS=-Xms3000m -Xmx3000m"
+      # General configuration
+      - "node.name=data-2"
+      - "cluster.name=mine42"
+      - "discovery.zen.ping.unicast.hosts=master-1"
+      # Node type configuration
+      - "node.master=false"
+      - "node.data=true"
+      - "node.ingest=false"
+      # Monitoring
+      - "xpack.monitoring.enabled=true"
+      - "xpack.monitoring.collection.enabled=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - "data-2:/usr/share/elasticsearch/data"
+    networks:
+      - backend
+
+  kibana-1:
+    hostname: "kibana-1"
+    image: "docker.elastic.co/kibana/kibana:6.7.0"
+    environment:
+      - SERVER_NAME=kibana-1
+      - ELASTICSEARCH_HOSTS=http://data-1:9200
+      # - ELASTICSEARCH_HOSTS='["data-1:9300", "data-2:9300"]'
+      # Monitoring
+      - "xpack.monitoring.enabled=true"
+    ports:
+      - "127.0.0.1:5601:5601/tcp"
+    networks:
+      - backend
+
+
+networks:
+  backend:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
+
+
+volumes:
+  master-1:
+    driver: local
+
+  ingest-1:
+    driver: local
+
+  data-1:
+    driver: local
+
+  data-2:
+    driver: local
