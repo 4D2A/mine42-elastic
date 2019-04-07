@@ -6,9 +6,9 @@ FROM docker.elastic.co/logstash/logstash-oss:6.7.0
 RUN rm -f /usr/share/logstash/config/*
 RUN rm -f /usr/share/logstash/pipeline/*
 # Copy custom configuration
-ADD config/ /usr/share/logstash/config/
+ADD config/*.yml /usr/share/logstash/config/
 # Copy custom pipelines
-ADD pipeline/ /usr/share/logstash/pipeline/
+ADD pipeline/*.conf /usr/share/logstash/pipeline/
 
 # Pipelines configuration
 # =======================
