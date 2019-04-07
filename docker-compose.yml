@@ -3,7 +3,6 @@ version: "2"
 services:
   logstash-1:
     hostname: "logstash-1"
-    # image: "docker.elastic.co/logstash/logstash:6.7.0"
     build: ./logstash
     environment:
       - "NODE_NAME=1.logstash"
@@ -11,8 +10,6 @@ services:
       - "CONFIG_RELOAD_INTERVAL=5s"
       - "QUEUE_TYPE=persisted"
       - "QUEUE_MAX_BYTES=4gb"
-    volumes:
-      - "/data/mine42_elk/logstash/pipelines:/usr/share/logstash/pipeline"
     networks:
       - backend
 
