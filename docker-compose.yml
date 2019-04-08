@@ -95,7 +95,7 @@ services:
 
   kibana-1:
     hostname: "kibana-1"
-    buid: ./kibana
+    build: ./kibana
     environment:
       - ELASTICSEARCH_HOSTS=http://data-1:9200
     ports:
