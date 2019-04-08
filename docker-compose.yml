@@ -31,8 +31,8 @@ services:
     networks:
       - backend 
 
-  ingest:
-    hostname: "ingest"
+  ingest-1:
+    hostname: "ingest-1"
     build: ./elasticsearch_ingest
     environment:
       # System and Java configuration
