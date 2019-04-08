@@ -1,0 +1,12 @@
+bootstrap.memory_lock: true
+
+network.host: _site_
+
+node:
+  master: false
+  data: true
+  ingest: false
+  name: ${HOSTNAME}
+
+xpack.monitoring.enabled: true
+xpack.monitoring.collection.enabled: true

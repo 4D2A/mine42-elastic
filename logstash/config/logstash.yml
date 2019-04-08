@@ -1,0 +1,10 @@
+node.name: ${HOSTNAME}
+
+config.reload:
+    automatic: false
+
+queue:
+  type: persisted
+  max_bytes: 1gb
+
+xpack.monitoring.enabled: false

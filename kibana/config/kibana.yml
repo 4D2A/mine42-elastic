@@ -1,0 +1,5 @@
+server:
+  name: ${HOSTNAME}
+  host: 0.0.0.0
+
+xpack.xpack_main.telemetry.enabled: false

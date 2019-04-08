@@ -5,31 +5,23 @@ services:
     hostname: "logstash-1"
     build: ./logstash
     environment:
-      - "NODE_NAME=1.logstash"
-      - "CONFIG_RELOAD_AUTOMATIC=true"
-      - "CONFIG_RELOAD_INTERVAL=5s"
-      - "QUEUE_TYPE=persisted"
-      - "QUEUE_MAX_BYTES=4gb"
+      # Pipelines configuration
+      - ELASTICSEARCH_HOSTS='["data-1:9200", "data-2:9200"]'
     networks:
       - backend
+    ports:
+      - "127.0.0.1:8080:8080"
 
   master-1:
     hostname: "master-1"
-    image: "docker.elastic.co/elasticsearch/elasticsearch:6.7.0"
+    build: ./elasticsearch_master
     environment:
       # System and Java configuration
       - "bootstrap.memory_lock=true"
       - "ES_JAVA_OPTS=-Xms1000m -Xmx1000m"
-      # General configuration
+      # Node configuration
       - "node.name=master-1"
       - "cluster.name=mine42"
-      # Node type configuration
-      - "node.master=true"
-      - "node.data=false"
-      - "node.ingest=false"
-      # Monitoring
-      - "xpack.monitoring.enabled=true"
-      - "xpack.monitoring.collection.enabled=false"
     ulimits:
       memlock:
         soft: -1
@@ -41,22 +33,15 @@ services:
 
   ingest:
     hostname: "ingest"
-    image: "docker.elastic.co/elasticsearch/elasticsearch:6.7.0"
+    build: ./elasticsearch_ingest
     environment:
       # System and Java configuration
       - "bootstrap.memory_lock=true"
       - "ES_JAVA_OPTS=-Xms500m -Xmx500m"
-      # General configuration
+      # Node configuration
       - "node.name=ingest-1"
       - "cluster.name=mine42"
       - "discovery.zen.ping.unicast.hosts=master-1"
-      # Node type configuration
-      - "node.master=false"
-      - "node.data=false"
-      - "node.ingest=true"
-      # Monitoring
-      - "xpack.monitoring.enabled=true"
-      - "xpack.monitoring.collection.enabled=false"
     ulimits:
       memlock:
         soft: -1
@@ -70,22 +55,15 @@ services:
 
   data-1:
     hostname: "data-1"
-    image: "docker.elastic.co/elasticsearch/elasticsearch:6.7.0"
+    build: ./elasticsearch_data
     environment:
       # System and Java configuration
       - "bootstrap.memory_lock=true"
       - "ES_JAVA_OPTS=-Xms3000m -Xmx3000m"
-      # General configuration
+      # Node configuration
       - "node.name=data-1"
       - "cluster.name=mine42"
       - "discovery.zen.ping.unicast.hosts=master-1"
-      # Node type configuration
-      - "node.master=false"
-      - "node.data=true"
-      - "node.ingest=false"
-      # Monitoring
-      - "xpack.monitoring.enabled=true"
-      - "xpack.monitoring.collection.enabled=false"
     ulimits:
       memlock:
         soft: -1
@@ -97,7 +75,7 @@ services:
 
   data-2:
     hostname: "data-1"
-    image: "docker.elastic.co/elasticsearch/elasticsearch:6.7.0"
+    build: ./elasticsearch_data
     environment:
       # System and Java configuration
       - "bootstrap.memory_lock=true"
@@ -106,13 +84,6 @@ services:
       - "node.name=data-2"
       - "cluster.name=mine42"
       - "discovery.zen.ping.unicast.hosts=master-1"
-      # Node type configuration
-      - "node.master=false"
-      - "node.data=true"
-      - "node.ingest=false"
-      # Monitoring
-      - "xpack.monitoring.enabled=true"
-      - "xpack.monitoring.collection.enabled=false"
     ulimits:
       memlock:
         soft: -1
@@ -124,13 +95,9 @@ services:
 
   kibana-1:
     hostname: "kibana-1"
-    image: "docker.elastic.co/kibana/kibana:6.7.0"
+    buid: ./kibana
     environment:
-      - SERVER_NAME=kibana-1
       - ELASTICSEARCH_HOSTS=http://data-1:9200
-      # - ELASTICSEARCH_HOSTS='["data-1:9300", "data-2:9300"]'
-      # Monitoring
-      - "xpack.monitoring.enabled=true"
     ports:
       - "127.0.0.1:5601:5601/tcp"
     networks:
@@ -145,7 +112,7 @@ networks:
       config:
         - subnet: 192.168.1.0/24
           gateway: 192.168.1.1
-
+  
 
 volumes:
   master-1:

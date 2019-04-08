@@ -1,4 +1,4 @@
-FROM docker.elastic.co/logstash/logstash-oss:6.7.0
+FROM docker.elastic.co/logstash/logstash:6.7.0
 
 # Base configuration
 # ==================
