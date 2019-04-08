@@ -3,7 +3,7 @@ FROM docker.elastic.co/logstash/logstash:6.7.0
 # Base configuration
 # ==================
 # Purge default configuration and pipelines
-RUN rm -f /usr/share/logstash/config/*
+RUN rm -f /usr/share/logstash/config/logstash.yml
 RUN rm -f /usr/share/logstash/pipeline/*
 # Copy custom configuration
 ADD config/*.yml /usr/share/logstash/config/
