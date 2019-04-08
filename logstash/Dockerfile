@@ -1,16 +1,10 @@
 FROM docker.elastic.co/logstash/logstash:6.7.0
 
-# Base configuration
-# ==================
-# Purge default configuration and pipelines
+# Copy configuration
 RUN rm -f /usr/share/logstash/config/logstash.yml
+COPY --chown=1000:1000 config/logstash.yml /usr/share/logstash/config/
+# Copy pipelines
 RUN rm -f /usr/share/logstash/pipeline/*
-# Copy custom configuration
-ADD config/*.yml /usr/share/logstash/config/
-# Copy custom pipelines
-ADD pipeline/*.conf /usr/share/logstash/pipeline/
-
-# Pipelines configuration
-# =======================
-# Pipeline http_json
+COPY --chown=1000:1000 pipeline/* /usr/share/logstash/pipeline/
+# Setup pipeline http_json
 EXPOSE 8080/tcp
