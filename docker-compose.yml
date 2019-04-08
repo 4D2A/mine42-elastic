@@ -6,7 +6,7 @@ services:
     build: ./logstash
     environment:
       # Pipelines configuration
-      - ELASTICSEARCH_HOSTS="ingest-1"
+      - "ELASTICSEARCH_HOSTS=ingest-1"
     networks:
       - backend
     ports:
