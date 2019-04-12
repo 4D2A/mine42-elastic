@@ -1,4 +1,4 @@
-FROM docker.elastic.co/kibana/kibana:6.7.0
+FROM docker.elastic.co/kibana/kibana:7.0.0
 
 # Copy configuration
 RUN rm -f /usr/share/kibana/config/kibana.yml

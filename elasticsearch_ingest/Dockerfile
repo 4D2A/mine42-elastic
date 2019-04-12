@@ -1,4 +1,4 @@
-FROM docker.elastic.co/elasticsearch/elasticsearch:6.7.0
+FROM docker.elastic.co/elasticsearch/elasticsearch:7.0.0
 
 # Copy configuration
 RUN rm -f /usr/share/elasticsearch/config/elasticsearch.yml
