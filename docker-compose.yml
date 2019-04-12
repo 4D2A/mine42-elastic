@@ -22,6 +22,8 @@ services:
       # Node configuration
       - "node.name=master-1"
       - "cluster.name=mine42"
+      - "discovery.seed_hosts=master-1"
+      - "cluster.initial_master_nodes=master-1"
     ulimits:
       memlock:
         soft: -1
@@ -41,7 +43,8 @@ services:
       # Node configuration
       - "node.name=ingest-1"
       - "cluster.name=mine42"
-      - "discovery.zen.ping.unicast.hosts=master-1"
+      - "discovery.seed_hosts=master-1"
+      - "cluster.initial_master_nodes=master-1"
     ulimits:
       memlock:
         soft: -1
@@ -52,6 +55,10 @@ services:
       - backend
     ports:
       - "127.0.0.1:9200:9200/tcp"
+    depends_on:
+      - master-1
+      - data-1
+      - data-2
 
   data-1:
     hostname: "data-1"
@@ -63,7 +70,8 @@ services:
       # Node configuration
       - "node.name=data-1"
       - "cluster.name=mine42"
-      - "discovery.zen.ping.unicast.hosts=master-1"
+      - "discovery.seed_hosts=master-1"
+      - "cluster.initial_master_nodes=master-1"
     ulimits:
       memlock:
         soft: -1
@@ -72,6 +80,8 @@ services:
       - "data-1:/usr/share/elasticsearch/data"
     networks:
       - backend
+    depends_on:
+      - master-1
 
   data-2:
     hostname: "data-1"
@@ -83,7 +93,8 @@ services:
       # General configuration
       - "node.name=data-2"
       - "cluster.name=mine42"
-      - "discovery.zen.ping.unicast.hosts=master-1"
+      - "discovery.seed_hosts=master-1"
+      - "cluster.initial_master_nodes=master-1"
     ulimits:
       memlock:
         soft: -1
@@ -92,12 +103,14 @@ services:
       - "data-2:/usr/share/elasticsearch/data"
     networks:
       - backend
+    depends_on:
+      - master-1
 
   kibana-1:
     hostname: "kibana-1"
     build: ./kibana
     environment:
-      - ELASTICSEARCH_HOSTS=http://data-1:9200
+      - "ELASTICSEARCH_HOSTS=data-1,data-2"
     ports:
       - "127.0.0.1:5601:5601/tcp"
     networks:
