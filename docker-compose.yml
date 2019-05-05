@@ -30,7 +30,7 @@ services:
         hard: -1
     volumes:
       - "master-1:/usr/share/elasticsearch/data"
-      - "/data/elastic-searchguard-ssl:/usr/share/elasticsearch/searchguard-ssl"
+      # - "/data/elastic-searchguard-ssl:/usr/share/elasticsearch/searchguard-ssl"
     networks:
       - backend 
 
@@ -52,7 +52,7 @@ services:
         hard: -1
     volumes:
       - "ingest-1:/usr/share/elasticsearch/data"
-      - "/data/elastic-searchguard-ssl:/usr/share/elasticsearch/searchguard-ssl"
+      # - "/data/elastic-searchguard-ssl:/usr/share/elasticsearch/searchguard-ssl"
     networks:
       - backend
     ports:
@@ -80,7 +80,7 @@ services:
         hard: -1
     volumes:
       - "data-1:/usr/share/elasticsearch/data"
-      - "/data/elastic-searchguard-ssl:/usr/share/elasticsearch/searchguard-ssl"
+      # - "/data/elastic-searchguard-ssl:/usr/share/elasticsearch/searchguard-ssl"
     networks:
       - backend
     depends_on:
@@ -104,7 +104,7 @@ services:
         hard: -1
     volumes:
       - "data-2:/usr/share/elasticsearch/data"
-      - "/data/elastic-searchguard-ssl:/usr/share/elasticsearch/searchguard-ssl"
+      # - "/data/elastic-searchguard-ssl:/usr/share/elasticsearch/searchguard-ssl"
     networks:
       - backend
     depends_on:
