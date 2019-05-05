@@ -6,4 +6,7 @@ COPY config/config.yml /tmp/config/
 # Fetch Search Guard Offline TLS tool
 CMD wget https://search.maven.org/remotecontent?filepath=com/floragunn/search-guard-tlstool/1.6/search-guard-tlstool-1.6.tar.gz -O /tmp/search-guard-tlstool-1.6.tar.gz
 CMD tar -xf /tmp/search-guard-tlstool-1.6.tar.gz -C /tmp/search-guard-tlstool
-CMD /tmp/search-guard-tlstool/tools/
+
+# Generates Search Guard certificates
+CMD mkdir /tmp/certificates
+CMD /tmp/search-guard-tlstool/tools/sgtlstool.sh -c /tmp/config/config.yml -crt -ca -t /tmp/certificates
