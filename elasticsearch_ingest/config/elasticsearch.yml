@@ -14,6 +14,7 @@ node:
 # X-Pack properties
 xpack.monitoring.enabled: true
 xpack.monitoring.collection.enabled: true
+xpack.security.enabled: false
 
 # Search Guard SSL
 searchguard.ssl.transport:
