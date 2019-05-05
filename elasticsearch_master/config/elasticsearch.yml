@@ -17,19 +17,17 @@ xpack.monitoring.collection.enabled: true
 xpack.security.enabled: false
 
 # Search Guard SSL
-searchguard.ssl.transport:
-  pemcert_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.pem
-  pemkey_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.key
-  pemtrustedcas_filepath: /usr/share/elasticsearch/config/searchguard-ssl/root-ca.pem
-  enforce_hostname_verification: false
-  resolve_hostname: false
+searchguard.ssl.transport.pemcert_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.pem
+searchguard.ssl.transport.pemkey_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.key
+searchguard.ssl.transport.pemtrustedcas_filepath: /usr/share/elasticsearch/config/searchguard-ssl/root-ca.pem
+searchguard.ssl.transport.enforce_hostname_verification: false
+searchguard.ssl.transport.resolve_hostname: false
 
 # Search Guard SSL - HTTP (REST API)
-searchguard.ssl.http:
-  enabled: true
-  pemcert_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.pem
-  pemkey_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.key
-  pemtrustedcas_filepath: /usr/share/elasticsearch/config/searchguard-ssl/root-ca.pem
+searchguard.ssl.http.enabled: true
+searchguard.ssl.http.pemcert_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.pem
+searchguard.ssl.http.pemkey_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.key
+searchguard.ssl.http.pemtrustedcas_filepath: /usr/share/elasticsearch/config/searchguard-ssl/root-ca.pem
 
 # Search Guard SSL - Nodes and admins certificates
 searchguard.nodes_dn:
