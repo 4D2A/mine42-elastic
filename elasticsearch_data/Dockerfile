@@ -6,9 +6,4 @@ COPY --chown=1000:1000 config/elasticsearch.yml /usr/share/elasticsearch/config/
 
 # Install Search Guard
 ARG SG_UUID=com.floragunn:search-guard-7:7.0.0-35.0.0-rc1
-RUN set -ex \
-    && chown -R elasticsearch /usr/share/elasticsearch/searchguard-ssl \
-    && elasticsearch-plugin install --batch ${SG_UUID} \
-    && cd /usr/share/elasticsearch/plugins/search-guard-7 \
-    && chown -R elasticsearch /usr/share/elasticsearch/plugins/search-guard-7 \
-    && chmod u+x /usr/share/elasticsearch/plugins/search-guard-7/tools/sgadmin.sh /usr/share/elasticsearch/plugins/search-guard-7/tools/hash.sh
+RUN set -ex && elasticsearch-plugin install --batch ${SG_UUID}
