@@ -1,12 +1,37 @@
+# Memory control
 bootstrap.memory_lock: true
 
+# Network discovery
 network.host: _site_
 
+# Node properties
 node:
   master: false
   data: true
   ingest: false
   name: ${HOSTNAME}
 
+# X-Pack properties
 xpack.monitoring.enabled: true
 xpack.monitoring.collection.enabled: true
+
+# Search Guard SSL
+searchguard.ssl.transport:
+  pemcert_filepath: /usr/share/elasticsearch/searchguard-tls/node.pem
+  pemkey_filepath: /usr/share/elasticsearch/searchguard-tls/node.key
+  pemtrustedcas_filepath: /usr/share/elasticsearch/searchguard-tls/root-ca.pem
+  enforce_hostname_verification: false
+  resolve_hostname: false
+
+# Search Guard SSL - HTTP (REST API)
+searchguard.ssl.http:
+  enabled: true
+  pemcert_filepath: /usr/share/elasticsearch/searchguard-tls/node_http.pem
+  pemkey_filepath: /usr/share/elasticsearch/searchguard-tls/node_http.key
+  pemtrustedcas_filepath: /usr/share/elasticsearch/searchguard-tls/root-ca.pem
+
+# Search Guard SSL - Nodes and admins certificates
+searchguard.nodes_dn:
+- CN=*.node.elastic.mine42.com,OU=elastic,O=Mine42,DC=mine42,DC=com
+searchguard.authcz.admin_dn:
+- CN=admin.elastic.mine42.com,OU=elastic,O=Mine42,DC=mine42,DC=com

@@ -1,0 +1,26 @@
+# Reference: https://docs.search-guard.com/latest/offline-tls-tool.html
+
+defaults:
+  validityDays: 3650
+  pkPassword: none
+  nodesDn:
+   - "CN=*,node.elastic.mine42.com,OU=elastic,O=Mine42,DC=mine42,DC=com"
+
+ca:
+   root:  
+      dn: CN=root.elastic.mine42.com,OU=elastic,O=MIne42,DC=mine42,DC=com
+      pkPassword: none
+      file: root-ca.pem 
+   intermediate:
+      dn: CN=signing.elastic.mine42.com,OU=elastic,O=Mine42,DC=mine42,DC=com
+      pkPassword: none
+      file: intermediate-ca.pem
+
+nodes:
+  - name: node
+    dn: CN=*.node.elastic.mine42.com,OU=elastic,O=Mine42,DC=mine42,DC=com
+
+clients:
+  - name: admin
+    dn: CN=admin.elastic.mine42.com,OU=elastic,O=Mine42,DC=mine42,DC=com
+    admin: true
