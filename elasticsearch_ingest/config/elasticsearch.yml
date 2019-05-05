@@ -27,8 +27,8 @@ searchguard.ssl.transport:
 # Search Guard SSL - HTTP (REST API)
 searchguard.ssl.http:
   enabled: true
-  pemcert_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node_http.pem
-  pemkey_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node_http.key
+  pemcert_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.pem
+  pemkey_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.key
   pemtrustedcas_filepath: /usr/share/elasticsearch/config/searchguard-ssl/root-ca.pem
 
 # Search Guard SSL - Nodes and admins certificates
