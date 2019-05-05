@@ -8,7 +8,7 @@ defaults:
 
 ca:
    root:  
-      dn: CN=root.elastic.mine42.com,OU=elastic,O=MIne42,DC=mine42,DC=com
+      dn: CN=root.elastic.mine42.com,OU=elastic,O=Mine42,DC=mine42,DC=com
       pkPassword: none
       file: root-ca.pem 
    intermediate:
