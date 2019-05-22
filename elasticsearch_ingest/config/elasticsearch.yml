@@ -15,23 +15,7 @@ node:
 xpack.monitoring.enabled: true
 xpack.monitoring.collection.enabled: true
 xpack.security.enabled: true
-xpack.security.transport.ssl.enabled: false
-
-# # Search Guard SSL
-# searchguard.ssl.transport.pemcert_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.pem
-# searchguard.ssl.transport.pemkey_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.key
-# searchguard.ssl.transport.pemtrustedcas_filepath: /usr/share/elasticsearch/config/searchguard-ssl/root-ca.pem
-# searchguard.ssl.transport.enforce_hostname_verification: false
-# searchguard.ssl.transport.resolve_hostname: false
-
-# # Search Guard SSL - HTTP (REST API)
-# searchguard.ssl.http.enabled: true
-# searchguard.ssl.http.pemcert_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.pem
-# searchguard.ssl.http.pemkey_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.key
-# searchguard.ssl.http.pemtrustedcas_filepath: /usr/share/elasticsearch/config/searchguard-ssl/root-ca.pem
-
-# # Search Guard SSL - Nodes and admins certificates
-# searchguard.nodes_dn:
-# - CN=*.node.elastic.mine42.com,OU=elastic,O=Mine42,DC=mine42,DC=com
-# searchguard.authcz.admin_dn:
-# - CN=admin.elastic.mine42.com,OU=elastic,O=Mine42,DC=mine42,DC=com
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.verification_mode: certificate
+xpack.security.transport.ssl.keystore.path: /usr/share/elasticsearch/config/certs/elastic.p12
+xpack.security.transport.ssl.truststore.path: /usr/share/elasticsearch/config/certs/elastic.p12
