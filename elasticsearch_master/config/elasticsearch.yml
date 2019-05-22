@@ -14,7 +14,7 @@ node:
 # X-Pack properties
 xpack.monitoring.enabled: true
 xpack.monitoring.collection.enabled: true
-xpack.security.enabled: false
+xpack.security.enabled: true
 
 # # Search Guard SSL
 # searchguard.ssl.transport.pemcert_filepath: /usr/share/elasticsearch/config/searchguard-ssl/node.pem
