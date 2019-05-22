@@ -1,4 +1,4 @@
-FROM docker.elastic.co/logstash/logstash:7.0.0
+FROM docker.elastic.co/logstash/logstash:7.1.0
 
 # Copy configuration
 RUN rm -f /usr/share/logstash/config/logstash.yml
