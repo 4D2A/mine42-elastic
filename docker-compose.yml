@@ -16,7 +16,7 @@ services:
     hostname: "certutil-1"
     build: ./elasticsearch_certutil
     volumes:
-      - "certs:/usr/share/elasticsearch/config/certs"
+      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs"
     networks:
       - backend
 
@@ -32,8 +32,8 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - "master-1:/usr/share/elasticsearch/data"
-      - "certs:/usr/share/elasticsearch/config/certs"
+      - "/data/elastic/master-1:/usr/share/elasticsearch/data"
+      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs"
     networks:
       - backend 
 
@@ -49,8 +49,8 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - "ingest-1:/usr/share/elasticsearch/data"
-      - "certs:/usr/share/elasticsearch/config/certs"
+      - "/data/elastic/ingest-1:/usr/share/elasticsearch/data"
+      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs"
     networks:
       - backend
     ports:
@@ -72,8 +72,8 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - "data-1:/usr/share/elasticsearch/data"
-      - "certs:/usr/share/elasticsearch/config/certs"
+      - "/data/elastic/data-1:/usr/share/elasticsearch/data"
+      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs"
     networks:
       - backend
     depends_on:
@@ -91,8 +91,8 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - "data-2:/usr/share/elasticsearch/data"
-      - "certs:/usr/share/elasticsearch/config/certs"
+      - "/data/elastic/data-2:/usr/share/elasticsearch/data"
+      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs"
     networks:
       - backend
     depends_on:
@@ -117,34 +117,3 @@ networks:
       config:
         - subnet: 192.168.1.0/24
           gateway: 192.168.1.1
-  
-
-volumes:
-  certs:
-    driver_opts:
-      type: none
-      device: /data/elastic/certs
-
-  master-1:
-    driver_opts:
-      type: none
-      device: /data/elastic/master-1
-      o: bind
-  
-  ingest-1:
-    driver_opts:
-      type: none
-      device: /data/elastic/ingest-1
-      o: bind
-
-  data-1:
-    driver_opts:
-      type: none
-      device: /data/elastic/data-1
-      o: bind
-  
-  data-2:
-    driver_opts:
-      type: none
-      device: /data/elastic/data-2
-      o: bind
