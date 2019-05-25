@@ -1,0 +1,17 @@
+# Memory control
+bootstrap.memory_lock: true
+
+# Network discovery
+network.host: _local_
+
+# Node properties
+node:
+  master: false
+  data: false
+  ingest: false
+  name: ${HOSTNAME}
+
+# X-Pack properties
+xpack.monitoring.enabled: true
+xpack.monitoring.collection.enabled: false
+xpack.security.enabled: false

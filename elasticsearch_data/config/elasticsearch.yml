@@ -11,6 +11,9 @@ node:
   ingest: false
   name: ${HOSTNAME}
 
+# Cluster properties
+cluster.name: elastic
+
 # X-Pack properties
 xpack.monitoring.enabled: true
 xpack.monitoring.collection.enabled: true

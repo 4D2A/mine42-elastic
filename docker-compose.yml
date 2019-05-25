@@ -1,26 +1,30 @@
 version: "2"
 
 services:
-  logstash-1:
-    hostname: "logstash-1"
-    build: ./logstash
-    environment:
-      # Pipelines configuration
-      - "ELASTICSEARCH_HOSTS=ingest-1"
+  # logstash-1:
+  #   hostname: "logstash-1"
+  #   build: ./logstash
+  #   environment:
+  #     # Pipelines configuration
+  #     - "ELASTICSEARCH_HOSTS=ingest-1"
+  #   networks:
+  #     - backend
+  #   ports:
+  #     - "127.0.0.1:8080:8080"
+
+  certutil-1:
+    hostname: "certutil-1"
+    build: ./elasticsearch_certutil
+    volumes:
+      - "certs:/usr/share/elasticsearch/config/certs"
     networks:
       - backend
-    ports:
-      - "127.0.0.1:8080:8080"
 
   master-1:
     hostname: "master-1"
     build: ./elasticsearch_master
     environment:
-      # System and Java configuration
-      - "bootstrap.memory_lock=true"
       - "ES_JAVA_OPTS=-Xms1000m -Xmx1000m"
-      # Node configuration
-      - "cluster.name=mine42"
       - "discovery.seed_hosts=master-1"
       - "cluster.initial_master_nodes=master-1"
     ulimits:
@@ -29,7 +33,7 @@ services:
         hard: -1
     volumes:
       - "master-1:/usr/share/elasticsearch/data"
-      - "/data/elastic_certs:/usr/share/elasticsearch/config/certs"
+      - "certs:/usr/share/elasticsearch/config/certs"
     networks:
       - backend 
 
@@ -37,11 +41,7 @@ services:
     hostname: "ingest-1"
     build: ./elasticsearch_ingest
     environment:
-      # System and Java configuration
-      - "bootstrap.memory_lock=true"
       - "ES_JAVA_OPTS=-Xms500m -Xmx500m"
-      # Node configuration
-      - "cluster.name=mine42"
       - "discovery.seed_hosts=master-1"
       - "cluster.initial_master_nodes=master-1"
     ulimits:
@@ -50,7 +50,7 @@ services:
         hard: -1
     volumes:
       - "ingest-1:/usr/share/elasticsearch/data"
-      - "/data/elastic_certs:/usr/share/elasticsearch/config/certs"
+      - "certs:/usr/share/elasticsearch/config/certs"
     networks:
       - backend
     ports:
@@ -64,11 +64,7 @@ services:
     hostname: "data-1"
     build: ./elasticsearch_data
     environment:
-      # System and Java configuration
-      - "bootstrap.memory_lock=true"
       - "ES_JAVA_OPTS=-Xms3000m -Xmx3000m"
-      # Node configuration
-      - "cluster.name=mine42"
       - "discovery.seed_hosts=master-1"
       - "cluster.initial_master_nodes=master-1"
     ulimits:
@@ -77,7 +73,7 @@ services:
         hard: -1
     volumes:
       - "data-1:/usr/share/elasticsearch/data"
-      - "/data/elastic_certs:/usr/share/elasticsearch/config/certs"
+      - "certs:/usr/share/elasticsearch/config/certs"
     networks:
       - backend
     depends_on:
@@ -87,11 +83,7 @@ services:
     hostname: "data-1"
     build: ./elasticsearch_data
     environment:
-      # System and Java configuration
-      - "bootstrap.memory_lock=true"
       - "ES_JAVA_OPTS=-Xms3000m -Xmx3000m"
-      # General configuration
-      - "cluster.name=mine42"
       - "discovery.seed_hosts=master-1"
       - "cluster.initial_master_nodes=master-1"
     ulimits:
@@ -100,7 +92,7 @@ services:
         hard: -1
     volumes:
       - "data-2:/usr/share/elasticsearch/data"
-      - "/data/elastic_certs:/usr/share/elasticsearch/config/certs"
+      - "certs:/usr/share/elasticsearch/config/certs"
     networks:
       - backend
     depends_on:
@@ -117,7 +109,6 @@ services:
       - "127.0.0.1:5601:5601/tcp"
 
 
-
 networks:
   backend:
     driver: bridge
@@ -129,14 +120,31 @@ networks:
   
 
 volumes:
-  master-1:
-    driver: local
+  certs:
+    driver_opts:
+      type: none
+      device: /data/elastic/certs
 
+  master-1:
+    driver_opts:
+      type: none
+      device: /data/elastic/master-1
+      o: bind
+  
   ingest-1:
-    driver: local
+    driver_opts:
+      type: none
+      device: /data/elastic/ingest-1
+      o: bind
 
   data-1:
-    driver: local
-
+    driver_opts:
+      type: none
+      device: /data/elastic/data-1
+      o: bind
+  
   data-2:
-    driver: local
+    driver_opts:
+      type: none
+      device: /data/elastic/data-2
+      o: bind
