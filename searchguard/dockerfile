@@ -1,8 +1,0 @@
-FROM ubuntu:latest
-
-ADD scripts sgconfig tlstool /root
-RUN /root/setup.sh
-
-# Generates Search Guard certificates
-CMD mkdir /tmp/certificates
-CMD /tmp/search-guard-tlstool/tools/sgtlstool.sh -c /tmp/config/config.yml -crt -ca -t /tmp/certificates
