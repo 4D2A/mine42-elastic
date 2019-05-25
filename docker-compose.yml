@@ -20,23 +20,6 @@ services:
     networks:
       - backend
 
-  master-1:
-    hostname: "master-1"
-    build: ./elasticsearch_master
-    environment:
-      - "ES_JAVA_OPTS=-Xms1000m -Xmx1000m"
-      - "discovery.seed_hosts=master-1"
-      - "cluster.initial_master_nodes=master-1"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - "/data/elastic/master-1:/usr/share/elasticsearch/data"
-      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs"
-    networks:
-      - backend 
-
   ingest-1:
     hostname: "ingest-1"
     build: ./elasticsearch_ingest
@@ -56,9 +39,27 @@ services:
     ports:
       - "127.0.0.1:9200:9200/tcp"
     depends_on:
-      - master-1
-      - data-1
-      - data-2
+      - certutil-1
+
+  master-1:
+    hostname: "master-1"
+    build: ./elasticsearch_master
+    environment:
+      - "ES_JAVA_OPTS=-Xms1000m -Xmx1000m"
+      - "discovery.seed_hosts=master-1"
+      - "cluster.initial_master_nodes=master-1"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - "/data/elastic/master-1:/usr/share/elasticsearch/data"
+      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs"
+    networks:
+      - backend
+    depends_on:
+      - certutil-1
+      - ingest-1
 
   data-1:
     hostname: "data-1"
@@ -77,6 +78,7 @@ services:
     networks:
       - backend
     depends_on:
+      - certutil-1
       - master-1
 
   data-2:
@@ -96,6 +98,7 @@ services:
     networks:
       - backend
     depends_on:
+      - certutil-1
       - master-1
 
   kibana-1:
@@ -107,6 +110,11 @@ services:
       - backend
     ports:
       - "127.0.0.1:5601:5601/tcp"
+    depends_on:
+      - certutil-1
+      - master-1
+      - data-1
+      - data-2
 
 
 networks:
