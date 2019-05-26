@@ -1,5 +1,12 @@
+# Server properties
 server:
   name: ${HOSTNAME}
   host: 0.0.0.0
 
+# X-Pack properties
 xpack.xpack_main.telemetry.enabled: false
+
+# Elasticsearch properties
+elasticsearch:
+  username: "kibana"
+  password: "changeme"

@@ -12,11 +12,12 @@ services:
   #   ports:
   #     - "127.0.0.1:8080:8080"
 
-  certutil-1:
-    hostname: "certutil-1"
-    build: ./elasticsearch_certutil
+  security:
+    hostname: "security"
+    build: ./elasticsearch_security
     volumes:
       - "/data/elastic/certs:/usr/share/elasticsearch/config/certs"
+      - "${PWD}/passwords:/usr/share/elasticsearch/config/passwords"
     networks:
       - backend
 

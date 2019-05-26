@@ -8,4 +8,4 @@ COPY --chown=1000:1000 config/elasticsearch.yml /usr/share/elasticsearch/config/
 COPY --chown=1000:1000 docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["auto"]
+CMD ["pass"]
