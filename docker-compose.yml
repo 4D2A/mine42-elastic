@@ -16,8 +16,8 @@ services:
     hostname: "security"
     build: ./elasticsearch_security
     volumes:
-      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs"
-      - "${PWD}/passwords:/usr/share/elasticsearch/config/passwords"
+      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs:rw"
+      - "${PWD}/passwords.txt:/usr/share/elasticsearch/config/passwords.txt:rw"
     networks:
       - backend
 
@@ -33,8 +33,8 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - "/data/elastic/ingest-1:/usr/share/elasticsearch/data"
-      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs"
+      - "/data/elastic/ingest-1:/usr/share/elasticsearch/data:rw"
+      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs:ro"
     networks:
       - backend
     ports:
@@ -52,8 +52,8 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - "/data/elastic/master-1:/usr/share/elasticsearch/data"
-      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs"
+      - "/data/elastic/master-1:/usr/share/elasticsearch/data:rw"
+      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs:ro"
     networks:
       - backend
     depends_on:
@@ -71,8 +71,8 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - "/data/elastic/data-1:/usr/share/elasticsearch/data"
-      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs"
+      - "/data/elastic/data-1:/usr/share/elasticsearch/data:rw"
+      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs:ro"
     networks:
       - backend
     depends_on:
@@ -90,8 +90,8 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - "/data/elastic/data-2:/usr/share/elasticsearch/data"
-      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs"
+      - "/data/elastic/data-2:/usr/share/elasticsearch/data:rw"
+      - "/data/elastic/certs:/usr/share/elasticsearch/config/certs:ro"
     networks:
       - backend
     depends_on:

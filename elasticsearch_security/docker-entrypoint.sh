@@ -13,7 +13,7 @@ PKCS_OUT="${CERTUTIL_OUT}/elastic-certificates.p12"
 
 # elasticsearch-setup-passwords globals
 SETPASSWD="${ELASTICSEARCH}/bin/elasticsearch-setup-passwords"
-PASSWORDS_OUT="${ELASTICSEARCH}/passwords"
+PASSWORDS_OUT="${ELASTICSEARCH}/passwords.txt"
 
 
 function log {
