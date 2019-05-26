@@ -13,7 +13,6 @@ PKCS_OUT="${CERTUTIL_OUT}/elastic-certificates.p12"
 
 # elasticsearch-setup-passwords globals
 SETPASSWD="${ELASTICSEARCH}/bin/elasticsearch-setup-passwords"
-PASSWORDS_OUT="${ELASTICSEARCH}/passwords.txt"
 
 
 function log {
@@ -45,7 +44,7 @@ function auto_passwd {
         exit 1
     else
         log "auto_passwd - INFO - Bootstraping passwords: node='${1}'"
-        ${SETPASSWD} --silent auto -u ${1} > ${PASSWORDS_OUT}
+        ${SETPASSWD} auto -u ${1}
     fi
 }
 

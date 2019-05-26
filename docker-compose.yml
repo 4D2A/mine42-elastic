@@ -17,7 +17,6 @@ services:
     build: ./elasticsearch_security
     volumes:
       - "/data/elastic/certs:/usr/share/elasticsearch/config/certs:rw"
-      - "${PWD}/passwords.txt:/usr/share/elasticsearch/config/passwords.txt:rw"
     networks:
       - backend
 
