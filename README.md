@@ -13,9 +13,10 @@ The repository contains:
 * Clone the repository: `git clone https://github.com/4D2A/mine42-elastic`
 * Optional: customize the default `docker-compose.yml`
 * Build the stack: `docker-compose -p elastic build --no-cache`
-* Generate the new certificates: `docker-compose -p elastic run security auto-certify`
+* Generate the new certificates: `docker-compose -p elastic run -name security_1 security auto-certify`
 * Start the stack: `docker-compose -p elastic up -d`
-* Generate the Elastic stack passwords: `docker-compose -p elastic run security auto-passwd`
+* Generate the Elastic stack passwords: `docker-compose -p elastic exec <master node container name> /usr/share/elasticsearch/bin/elasticsearch-setup-passwords auto`
+* Update the environment variable `ELASTICSEARCH_PASSWORD` in the Kibana service(s) with the new `kibana` account password
 
 ## Components
 
@@ -40,7 +41,7 @@ The repository contains:
 ### `elasticsearch_certutil`
 
 > **Type**: Docker image  
-> **Description**: An security tools wrapper to automatically generate certificates and passwords  
+> **Description**: An security tools wrapper to automatically generate the stack certificates  
 > **More information**: `elasticsearch_security/README.md`
 
 ### `kibana`

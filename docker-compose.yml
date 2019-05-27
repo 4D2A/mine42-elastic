@@ -101,6 +101,7 @@ services:
     build: ./kibana
     environment:
       - "ELASTICSEARCH_HOSTS=http://data-1:9200"
+      # -"ELASTICSEARCH_PASSWORD=changeme"
     networks:
       - backend
     ports:
